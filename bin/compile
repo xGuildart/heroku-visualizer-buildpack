@@ -52,7 +52,7 @@ fi
 
 chmod -f +x $dir/bin/{detect,compile,release}
 
-framework=$($dir/bin/detect $1)
+framework=$($dir/bin/detect $1/frontend)
 
 if [ $? == 0 ]; then
   echo "=====> Detected Framework: $framework"
