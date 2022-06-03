@@ -2,6 +2,8 @@
 # bin/detect <build-dir>
 
 echo "at detect phase : build-dir=$1, current dir = $(pwd)"
+echo "cat static.json $(cat $1/static.json)"
+echo "dir contain $(ls $1)"
 
 if [ -f $1/frontend/package.json ]; then
   echo "React.js (create-react-app) multi" && exit 0
