@@ -1,8 +1,9 @@
 #!/bin/bash
 # bin/release <build-dir>
 
-cat << EOF
-addons: []
-default_process_types:
-  web: npm start
-EOF
+if [ -e $1/last_pack_release.out ]; then
+  cat $1/last_pack_release.out
+  rm $1/last_pack_release.out
+else
+  echo "--- {}"
+fi

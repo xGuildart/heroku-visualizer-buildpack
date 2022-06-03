@@ -1,69 +1,10 @@
 #!/bin/bash
 # bin/detect <build-dir>
 
-[ "$BUILDPACK_XTRACE" ] && set -o xtrace
+echo "at detect phase : build-dir=$1, current dir = $(pwd)"
 
-error() {
-  local c="2,999 s/^/ !     /"
-	# send all of our output to stderr
-	exec 1>&2
-
-	echo -e "\033[1;31m" # bold; red
-	echo -n " !     ERROR: "
-	# this will be fed from stdin
-  case $(uname) in
-		Darwin) sed -l "$c";; # mac/bsd sed: -l buffers on line boundaries
-		*)      sed -u "$c";; # unix/gnu sed: -u unbuffered (arbitrary) chunks of data
-	esac
-	echo -e "\033[0m" # reset style
-	exit 1
-}
-echo "this is #$1# directory"
-if [ -f "$1/frontend/package.json" ]; then
-  echo 'Node.js'
-  exit 0
-fi
-
-if [[ -f "$1/.slugignore" ]] && grep -Fxq "package.json" "$1/.slugignore"; then
-  error << EOF
-'package.json' listed in '.slugignore' file
-The 'heroku/nodejs' buildpack is set on this application, but was
-unable to detect a 'package.json' file. This is likely because
-the '.slugignore' file is removing it before the build begins.
-For more information, refer to the following documentation:
-https://devcenter.heroku.com/articles/slug-compiler#ignoring-files-with-slugignore
-EOF
-elif [[ -f "$1/.gitignore" ]] && grep -Fxq "package.json" "$1/.gitignore"; then
-  error << EOF
-'package.json' listed in '.gitignore' file
-The 'heroku/nodejs' buildpack is set on this application, but was
-unable to detect a 'package.json' file. This is likely because
-the '.gitignore' file is preventing it from being checked in to
-the git repo.
-For more information, refer to the following documentation:
-https://devcenter.heroku.com/articles/gitignore
-EOF
+if [ -f $1/frontend/package.json ]; then
+  echo "React.js (create-react-app) multi" && exit 0
 else
-  error <<- EOF
-Application not supported by 'heroku/nodejs' buildpack
-The 'heroku/nodejs' buildpack is set on this application, but was
-unable to detect a Node.js codebase.
-    
-A Node.js app on Heroku requires a 'package.json' at the root of
-the directory structure.
-If you are trying to deploy a Node.js application, ensure that this
-file is present at the top level directory. This directory has the
-following files:
-$(ls -1p "$1")
-    
-If you are trying to deploy an application written in another
-language, you need to change the list of buildpacks set on your
-Heroku app using the 'heroku buildpacks' command.
-    
-For more information, refer to the following documentation:
-https://devcenter.heroku.com/articles/buildpacks
-https://devcenter.heroku.com/articles/nodejs-support#activation
-EOF
+  echo "no" && exit 1
 fi
-
-exit 1
