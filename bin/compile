@@ -54,16 +54,15 @@ chmod -f +x $dir/bin/{detect,compile,release}
 
 front=$BUILD_DIR/frontend
 
-echo "detecting framework at $(ls $1)"
-framework=$($dir/bin/detect $1)
-
 echo "front contain $(ls "$BUILD_DIR/frontend")"
 echo "moving folder frontend"
 mv $BUILD_DIR/frontend/* $BUILD_DIR/
 rm -rf $BUILD_DIR/frontend
 
-mv $BUILD_DIR/frontend/* $BUILD_DIR/
-rm -rf $BUILD_DIR/frontend
+
+echo "detecting framework at $(ls $1)"
+framework=$($dir/bin/detect $1)
+
 
 if [ $? == 0 ]; then
   echo "=====> Detected Framework: $framework"
