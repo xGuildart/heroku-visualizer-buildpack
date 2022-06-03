@@ -7,5 +7,5 @@ echo "dir conttain: $(ls $1)"
 cat << EOF
 addons: []
 default_process_types:
-  web: npm start --prefix frontend
+  web: npm start
 EOF
