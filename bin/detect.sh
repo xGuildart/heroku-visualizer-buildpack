@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/bin/bash
 # bin/detect <build-dir>
 
 [ "$BUILDPACK_XTRACE" ] && set -o xtrace
@@ -18,7 +18,7 @@ error() {
 	echo -e "\033[0m" # reset style
 	exit 1
 }
-
+echo "this is #$1# directory"
 if [ -f "$1/frontend/package.json" ]; then
   echo 'Node.js'
   exit 0
