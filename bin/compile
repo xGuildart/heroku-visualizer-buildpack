@@ -14,4 +14,4 @@ echo "BP_DIR is: $BP_DIR"
 export NEW_BUILD_SCRIPT_BEHAVIOR=true
 
 echo "runing npm install --prefix frontend"
-npm install --prefix frontend
+monitor "npm-install" npm install --prefix frontend --production="$production" --unsafe-perm --userconfig "$build_dir/.npmrc" 2>&1
