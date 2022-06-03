@@ -52,7 +52,10 @@ fi
 
 chmod -f +x $dir/bin/{detect,compile,release}
 
-framework=$($dir/bin/detect "$1/frontend")
+front=$BUILD_DIR/frontend
+
+echo "detecting framework at $(ls $1)"
+framework=$($dir/bin/detect $1)
 
 echo "front contain $(ls "$BUILD_DIR/frontend")"
 echo "moving folder frontend"
