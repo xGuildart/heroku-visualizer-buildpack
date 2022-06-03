@@ -63,6 +63,9 @@ rm -rf $BUILD_DIR/frontend
 echo "detecting framework at $(ls $1)"
 framework=$($dir/bin/detect $1)
 
+echo "build-dir=$1, current dir = $(pwd)"
+echo "cat static.json $(cat $1/static.json)"
+echo "dir contain $(ls $1)"
 
 if [ $? == 0 ]; then
   echo "=====> Detected Framework: $framework"
